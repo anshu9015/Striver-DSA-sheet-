@@ -1,35 +1,34 @@
 // Online C++ compiler to run C++ program online
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Node{
     public:
     int data;
-    Node* next;
+    class Node* next;
 };
-
 void push(class Node** head,int newdata){
-    Node* new_node = new Node();
-    new_node ->data = newdata;
-    new_node -> next = (*head);
-    (*head) = new_node;
+    Node* temp = new Node();
+    temp->data = newdata;
+    temp->next =(*head);
+    (*head)= temp;
 }
 
 void insertAfter(class Node* prevNode,int newdata){
-    Node* new_node = new Node();
-    new_node -> data = newdata;
-    new_node -> next = prevNode -> next;
-    prevNode -> next = new_node;
+   Node* temp = new Node();
+   temp->data = newdata;
+   temp->next = prevNode->next;
+   prevNode->next = temp;
 }
 void insertLast(class Node** head, int newdata){
-    Node* new_node = new Node();
-    Node* last = (*head);
-    while(last->next != NULL){
+    Node* temp = new Node();
+    Node* last = *head;
+    while(last->next != nullptr){
         last = last->next;
     }
-    new_node ->data= newdata;
-    last -> next = new_node;
-    new_node -> next = NULL;
+    temp->data = newdata;
+    temp->next = nullptr;
+    last->next = temp;
 }
 void del_beg(class Node** head){
     class Node* temp = (*head);
@@ -72,6 +71,22 @@ void print(class Node* node){
     }
 }
 
+void reverseList(class Node** head){
+    Node* prevptr = nullptr;
+    Node* currptr = *head;
+    Node* nextptr;
+    
+    while(currptr!= nullptr){
+        nextptr = currptr->next;
+        currptr->next = prevptr;
+        
+        prevptr= currptr;
+        currptr = nextptr;
+    }
+    *head = prevptr;
+}
+
+
 int main() {
   class Node* head_val = NULL;
 
@@ -79,12 +94,17 @@ int main() {
  push(&head_val, 10);
   insertLast(&head_val, 48);
   insertAfter(head_val, 72);
-//  del_beg(&head_val);
-//  delLast(&head_val);
- delPosition(&head_val, 1);
+ del_beg(&head_val);
+  delLast(&head_val);
+ delPosition(&head_val, 2);
   cout << "*---Implementation of Linked List in C++---*" << endl;
 
   cout << "\nThe Input Linked list is: ";
   print(head_val);
+  cout<<endl;
+  cout<<"After reverse"<<" ";
+  reverseList(&head_val);
+  print(head_val);
+
     return 0;
 }
